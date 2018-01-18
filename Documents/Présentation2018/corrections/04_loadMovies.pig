@@ -12,7 +12,7 @@ STORE TAG_C INTO 'movie.tags' USING org.apache.hive.hcatalog.pig.HCatStorer();
 
 MOVIE_A = LOAD 'data/movies.csv' USING PigStorage(',') as (movie_id: long,title: chararray,genres: chararray);
 MOVIE_B = FILTER MOVIE_A BY movie_id IS NOT NULL;
-MOVIE_C = FOREACH MOVIE_B GENERATE movie_id, title, STRSPLITTOBAG(genres, '|', 0) as genres:{(chararray)};
+MOVIE_C = FOREACH MOVIE_B GENERATE movie_id, title, STRSPLITTOBAG(genres, '\\|', 0) as genres:{(chararray)};
 STORE MOVIE_C INTO 'movie.movies' USING org.apache.hive.hcatalog.pig.HCatStorer();
 
 
